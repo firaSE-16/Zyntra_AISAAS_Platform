@@ -74,19 +74,28 @@ To get a local copy up and running, follow these simple steps.
    Create a `.env.local` file in the root directory and add your environment variables. You'll need keys for Clerk, Supabase, and any AI APIs you integrate.
 
    ```env
-   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_YOUR_CLERK_PUBLISHABLE_KEY
-   CLERK_SECRET_KEY=sk_YOUR_CLERK_SECRET_KEY
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_dW5iaWFzZWQtbmV3dC01OS5jbGVyay5hY2NvdW50cy5kZXYk
+   CLERK_SECRET_KEY=sk_test_9xs9PLNvc7dLRggwP0sNfMYLwZXkF4M05d2A4byCZy
    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-   NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-   NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
-   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+   NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/dashboard
+   NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/dashboard
 
-   SUPABASE_URL=YOUR_SUPABASE_URL
-   SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+   ROUTER_AI_API_KEY=
+   ROUTER_AI_CODE_API_KEY=
+   REPLICATE_AI_API_KEY=
+   APIFY_API_KEY=
 
-   # Example for AI API keys (replace with actual services used)
-   OPENAI_API_KEY=YOUR_OPENAI_API_KEY
-   REPLICATE_API_TOKEN=YOUR_REPLICATE_API_TOKEN
+   DATABASE_URL=""
+
+
+   STRIPE_SECRET_KEY=
+   STRIPE_PUBLIC_KEY=
+
+   NEXT_PUBLIC_APP_URL=http://localhost:3001
+
+   STRIPE_WEBHOOK_SECRET=
+
+
    ```
 
 4. **Run the development server:**
