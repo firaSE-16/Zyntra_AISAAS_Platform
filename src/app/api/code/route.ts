@@ -1,11 +1,7 @@
-import { checktApiLimit } from "@/lib/api-limit";
-import { increaseApiLimit } from "@/lib/api-limit";
-import { checkSubscription } from "@/lib/subscirption";
-
+import { checktApiLimit, increaseApiLimit } from "@/lib/api-limit";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-
 
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
@@ -36,11 +32,12 @@ export async function POST(req: Request) {
       return new NextResponse("Messages are required and must be a non-empty array.", { status: 400 });
     }
 
-    const freeTrial = await checktApiLimit()
-
-    if(!freeTrial){
-      return new NextResponse("Free trial has expired." ,{status:403})
-    }
+     const freeTrial = await checktApiLimit()
+    
+        if(!freeTrial){
+          return new NextResponse("Free trial has expired." ,{status:403})
+    
+        }
 
     const completion = await openai.chat.completions.create({
       model: "google/gemma-3-12b-it:free", // ✅ Typo fixed from "googl"
@@ -50,7 +47,7 @@ export async function POST(req: Request) {
           content: [
             {
               type: "text",
-              text: "",
+              text: "Generate code or fix the code if there is an error.",
             },
           ],
         },
@@ -61,11 +58,8 @@ export async function POST(req: Request) {
     const content = completion.choices?.[0]?.message?.content;
 
     if (content) {
-      const isPro = await checkSubscription();
-      if (!isPro) {
-        await increaseApiLimit();
-      }
       return NextResponse.json(content);
+      await increaseApiLimit();
     } else {
       console.error("AI response did not contain valid content.", completion);
       return new NextResponse("AI did not return valid content.", { status: 500 });

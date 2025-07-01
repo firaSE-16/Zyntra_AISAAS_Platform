@@ -1,7 +1,7 @@
 "use client";
 
 import Heading from "@/components/converation/Heading";
-import { MessageSquare } from "lucide-react";
+import { Code } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,26 +20,23 @@ import BotAvatar from "@/components/bot-avatart";
 import { Progress } from "@/components/ui/progress";
 
 const tips = [
-  "Tip: You can ask follow-up questions!",
+  "Tip: Ask for code in any language or framework!",
   "Tip: Use clear, specific prompts for best results.",
-  "Tip: Your chat history is private.",
+  "Tip: Your code history is private.",
 ];
 
-const Page = React.forwardRef(function Page(props: any, ref) {
-  const { refetchApiLimitCount } = props;
+const Page = () => {
   const router = useRouter();
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
   const [tip] = useState(() => tips[Math.floor(Math.random() * tips.length)]);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: "",
     },
   });
-
   const isLoading = form.formState.isSubmitting;
 
   function cleanAiResponse(text: string) {
@@ -68,7 +65,7 @@ const Page = React.forwardRef(function Page(props: any, ref) {
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
       setLoadingProgress(40);
-      const response = await axios.post("/api/conversation", {
+      const response = await axios.post("/api/code", {
         messages: newMessages,
       });
       setLoadingProgress(80);
@@ -80,7 +77,6 @@ const Page = React.forwardRef(function Page(props: any, ref) {
       setLoadingProgress(100);
       setTimeout(() => setShowProgress(false), 400);
       form.reset();
-      if (refetchApiLimitCount) refetchApiLimitCount();
     } catch (error: unknown) {
       setShowProgress(false);
       console.error(error);
@@ -92,22 +88,22 @@ const Page = React.forwardRef(function Page(props: any, ref) {
   return (
     <div className="h-full flex flex-col bg-gradient-to-br from-indigo-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-800">
       <Heading
-        title="Conversation"
-        description="Our most advanced Conversation model."
-        icon={MessageSquare}
-        iconColor="text-violet-500"
-        bgColor="bg-violet-500/10"
+        title="Code Generation"
+        description="Generate code using descriptive text."
+        icon={Code}
+        iconColor="text-green-700"
+        bgColor="bg-green-700/10"
       />
       <div className="w-full max-w-2xl mx-auto mt-4 mb-2 px-2 sm:px-4">
-        <div className="rounded-lg bg-indigo-50 dark:bg-gray-800/80 px-2 sm:px-4 py-2 text-xs sm:text-sm text-gray-700 dark:text-gray-200 border border-indigo-100 dark:border-gray-700 flex items-center gap-2">
-          <MessageSquare className="w-4 h-4 text-violet-500" />
+        <div className="rounded-lg bg-green-50 dark:bg-gray-800/80 px-2 sm:px-4 py-2 text-xs sm:text-sm text-gray-700 dark:text-gray-200 border border-green-100 dark:border-gray-700 flex items-center gap-2">
+          <Code className="w-4 h-4 text-green-700" />
           <span>{tip}</span>
         </div>
       </div>
       <div className="flex-1 w-full max-w-2xl mx-auto flex flex-col pb-40 relative px-1 sm:px-4">
         {showProgress && (
           <div className="sticky top-0 z-20">
-            <Progress value={loadingProgress} className="h-1 bg-violet-200 dark:bg-gray-700" />
+            <Progress value={loadingProgress} className="h-1 bg-green-200 dark:bg-gray-700" />
           </div>
         )}
         {isLoading && (
@@ -126,7 +122,7 @@ const Page = React.forwardRef(function Page(props: any, ref) {
                 className={`p-4 rounded-xl shadow-md transition-all duration-300 animate-fade-in border border-black/10 dark:border-gray-700/40 ${
                   message.role === "user" 
                     ? "bg-white dark:bg-gray-900" 
-                    : "bg-violet-50 dark:bg-gray-800"
+                    : "bg-green-50 dark:bg-gray-800"
                 }`}
               >
                 {message.role === "user" ? (
@@ -150,7 +146,7 @@ const Page = React.forwardRef(function Page(props: any, ref) {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="rounded-2xl shadow-xl border border-indigo-100 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 w-full p-4 focus-within:shadow-2xl flex gap-2 items-center backdrop-blur-md"
+              className="rounded-2xl shadow-xl border border-green-100 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 w-full p-4 focus-within:shadow-2xl flex gap-2 items-center backdrop-blur-md"
             >
               <FormField
                 name="prompt"
@@ -160,7 +156,7 @@ const Page = React.forwardRef(function Page(props: any, ref) {
                       <Input
                         className="border-0 h-12 lg:h-14 outline-none focus-visible:ring-0 focus-visible:ring-transparent bg-transparent text-base"
                         disabled={isLoading}
-                        placeholder="Type your message and press Enter..."
+                        placeholder="Type your code prompt and press Enter..."
                         {...field}
                       />
                     </FormControl>
@@ -179,6 +175,6 @@ const Page = React.forwardRef(function Page(props: any, ref) {
       </div>
     </div>
   );
-});
+};
 
 export default Page;
