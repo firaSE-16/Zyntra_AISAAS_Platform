@@ -60,7 +60,7 @@ To get a local copy up and running, follow these simple steps.
 1. **Clone the repository:**
 
    ```bash
-   git clone [https://github.com/your-username/zyntra-ai.git](https://github.com/your-username/zyntra-ai.git)
+   git clone https://github.com/firaSE-16/Zyntra_AISAAS_Platform.git
    cd zyntra-ai
    ```
 
