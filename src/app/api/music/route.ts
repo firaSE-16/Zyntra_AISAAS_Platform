@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import axios from 'axios';
 import Replicate from "replicate"
 import { checktApiLimit, increaseApiLimit } from '@/lib/api-limit';
@@ -10,7 +10,7 @@ const replicate = new Replicate({
 
 
 
-export async function POST(req:NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     if (!REPLICATE_API) {
       console.error("TOPMEDIAI_API_KEY is not configured in environment variables.");
