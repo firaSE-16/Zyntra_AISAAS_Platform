@@ -128,5 +128,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📞 Contact
 
-Your Name - [your.email@example.com](mailto:your.email@example.com)
-Project Link: [https://github.com/your-username/zyntra-ai](https://github.com/your-username/zyntra-ai) (Replace with your actual GitHub repo link)
+Your Name - [loarifse16@gmail.com](mailto:loarifse16@example.com)
+Project Link: [https://github.com/firaSE-16/Zyntra_AISAAS_Platform.git]
