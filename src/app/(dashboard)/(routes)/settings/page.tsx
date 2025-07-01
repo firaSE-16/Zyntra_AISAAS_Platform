@@ -7,6 +7,7 @@ import { Settings } from "lucide-react"
 
 const SettingsPage = async () => {
     const isPro = await checkSubscription()
+    const isProBool = Boolean(isPro);
 
     return(
         <div>
@@ -22,9 +23,9 @@ const SettingsPage = async () => {
 
             <div className="px-4 lg:px-8 space-y-4">
                 <div className="text-muted-foreground text-sm">
-{isPro ? "Your are currently on a pro plan.":"You are currently on a free plan."}
+{isProBool ? "Your are currently on a pro plan.":"You are currently on a free plan."}
                 </div>
-<SubscriptionButton isPro={isPro}/>
+<SubscriptionButton isPro={isProBool}/>
             </div>
         </div>
     )
