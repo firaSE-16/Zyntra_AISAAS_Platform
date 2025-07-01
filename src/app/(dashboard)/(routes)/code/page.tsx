@@ -27,7 +27,7 @@ const tips = [
 
 const Page = () => {
   const router = useRouter();
-  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
   const [tip] = useState(() => tips[Math.floor(Math.random() * tips.length)]);
@@ -58,9 +58,9 @@ const Page = () => {
     try {
       setShowProgress(true);
       setLoadingProgress(20);
-      const userMessage: ChatCompletionMessageParam = {
+      const userMessage = {
         role: "user",
-        content: values.prompt,
+        content: values.prompt as string,
       };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
@@ -69,11 +69,11 @@ const Page = () => {
         messages: newMessages,
       });
       setLoadingProgress(80);
-      const aiMessage: ChatCompletionMessageParam = {
+      const aiMessage = {
         role: "assistant",
-        content: cleanAiResponse(response.data),
+        content: cleanAiResponse(response.data) as string,
       };
-      setMessages((current) => [...current, aiMessage]);
+      setMessages([...newMessages, aiMessage]);
       setLoadingProgress(100);
       setTimeout(() => setShowProgress(false), 400);
       form.reset();
@@ -126,13 +126,13 @@ const Page = () => {
                 }`}
               >
                 {message.role === "user" ? (
-                  <div className="flex gap-2 items-start"><UserAvatar/><p className="text-sm flex items-center ">{message.content}</p></div>
+                  <div className="flex gap-2 items-start"><UserAvatar/><p className="text-sm flex items-center ">{message.content as string}</p></div>
                 ) : (
                   <div className="flex gap-2 items-start">
                     <BotAvatar/>
                     <div 
                       className="text-sm [&>pre]:bg-gray-800 [&>pre]:text-white [&>pre]:p-4 [&>pre]:rounded-md [&>pre]:overflow-x-auto"
-                      dangerouslySetInnerHTML={{ __html: message.content || '' }}
+                      dangerouslySetInnerHTML={{ __html: message.content as string || '' }}
                     />
                   </div>
                 )}
