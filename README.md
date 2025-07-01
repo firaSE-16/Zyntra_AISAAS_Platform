@@ -74,8 +74,8 @@ To get a local copy up and running, follow these simple steps.
    Create a `.env.local` file in the root directory and add your environment variables. You'll need keys for Clerk, Supabase, and any AI APIs you integrate.
 
    ```env
-   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_dW5iaWFzZWQtbmV3dC01OS5jbGVyay5hY2NvdW50cy5kZXYk
-   CLERK_SECRET_KEY=sk_test_9xs9PLNvc7dLRggwP0sNfMYLwZXkF4M05d2A4byCZy
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+   CLERK_SECRET_KEY=
    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
    NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/dashboard
    NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/dashboard
