@@ -62,7 +62,9 @@ export async function POST(req:Request){
     }
     if(event.type === "invoice.payment_succeeded"){
         const invoice = event.data.object as Stripe.Invoice;
-        const subscriptionId = typeof invoice.subscription === "string" ? invoice.subscription : undefined;
+        const subscriptionId = (invoice as any).subscription && typeof (invoice as any).subscription === "string"
+          ? (invoice as any).subscription
+          : undefined;
         if (!subscriptionId) {
             console.error("[WEBHOOK] invoice.payment_succeeded missing subscriptionId", { subscriptionId });
             return new NextResponse("Missing subscriptionId", { status: 400 });
