@@ -4,12 +4,17 @@ import MobileSidebar from "./mobilesidebar";
 import { useTheme } from "@/components/ThemeProvider";
 import Image from "next/image";
 
-const Navbar = () => {
+interface NavbarProps {
+  apiLimitCount: number;
+  isPro?: boolean;
+}
+
+const Navbar = ({ apiLimitCount, isPro }: NavbarProps) => {
   const { dark, toggleDark } = useTheme();
   return (
     <nav className="w-full flex items-center justify-between px-2 sm:px-6 py-2 sm:py-3 h-16 bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800 shadow-sm backdrop-blur-md z-30">
       <div className="flex items-center gap-2">
-        <MobileSidebar />
+        <MobileSidebar apiLimitCount={apiLimitCount} isPro={isPro} />
         <div className="flex items-center gap-2">
           <Image src="/assets/logo.png" alt="Zyntra Logo" width={32} height={32} className="rounded-xl" />
           <span className="font-extrabold text-xl tracking-tight text-indigo-600 dark:text-pink-400 select-none">Zyntra</span>
