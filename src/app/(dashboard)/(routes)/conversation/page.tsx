@@ -25,7 +25,7 @@ const tips = [
   "Tip: Your chat history is private.",
 ];
 
-const Page = React.forwardRef(function Page(props: any, ref) {
+function Page(props: any) {
   const { refetchApiLimitCount } = props;
   const router = useRouter();
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
@@ -179,6 +179,6 @@ const Page = React.forwardRef(function Page(props: any, ref) {
       </div>
     </div>
   );
-});
+}
 
 export default Page;
