@@ -26,9 +26,9 @@ const tips = [
 ];
 
 function Page(props: any) {
-  const { refetchApiLimitCount } = props;
+  const { refetchApiLimitCount } = props || {};
   const router = useRouter();
-  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
   const [tip] = useState(() => tips[Math.floor(Math.random() * tips.length)]);
@@ -61,9 +61,9 @@ function Page(props: any) {
     try {
       setShowProgress(true);
       setLoadingProgress(20);
-      const userMessage: ChatCompletionMessageParam = {
+      const userMessage = {
         role: "user",
-        content: values.prompt,
+        content: values.prompt as string,
       };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
@@ -72,11 +72,11 @@ function Page(props: any) {
         messages: newMessages,
       });
       setLoadingProgress(80);
-      const aiMessage: ChatCompletionMessageParam = {
+      const aiMessage = {
         role: "assistant",
-        content: cleanAiResponse(response.data),
+        content: cleanAiResponse(response.data) as string,
       };
-      setMessages((current) => [...current, aiMessage]);
+      setMessages([...newMessages, aiMessage]);
       setLoadingProgress(100);
       setTimeout(() => setShowProgress(false), 400);
       form.reset();
